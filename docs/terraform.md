@@ -32,17 +32,17 @@
 |------|
 | [aws_ami](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/ami) |
 | [aws_availability_zones](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/availability_zones) |
+| [aws_eip_association](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/eip_association) |
 | [aws_eip](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/eip) |
 | [aws_eip](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/eip) |
-| [aws_eip_association](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/eip_association) |
 | [aws_instance](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/instance) |
 | [aws_nat_gateway](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/nat_gateway) |
 | [aws_network_acl](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/network_acl) |
-| [aws_route](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/route) |
-| [aws_route_table](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/route_table) |
 | [aws_route_table_association](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/route_table_association) |
-| [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/security_group) |
+| [aws_route_table](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/route_table) |
+| [aws_route](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/route) |
 | [aws_security_group_rule](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/security_group_rule) |
+| [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/security_group) |
 | [aws_subnet](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/subnet) |
 | [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/vpc) |
 
@@ -54,6 +54,9 @@
 | attributes | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
 | availability\_zone\_attribute\_style | The style of Availability Zone code to use in tags and names. One of `full`, `short`, or `fixed`. | `string` | `"short"` | no |
 | availability\_zones | List of Availability Zones where subnets will be created | `list(string)` | n/a | yes |
+| aws\_account\_id | The AWS account id of the provider being deployed to (e.g. 12345678). Autoloaded from account.tfvars | `string` | `""` | no |
+| aws\_assume\_role\_arn | (Optional) - ARN of the IAM role when optionally connecting to AWS via assumed role. Autoloaded from account.tfvars. | `string` | `""` | no |
+| aws\_region | The AWS region (e.g. ap-southeast-2). Autoloaded from region.tfvars. | `string` | `""` | no |
 | aws\_route\_create\_timeout | Time to wait for AWS route creation specifed as a Go Duration, e.g. `2m` | `string` | `"2m"` | no |
 | aws\_route\_delete\_timeout | Time to wait for AWS route deletion specifed as a Go Duration, e.g. `5m` | `string` | `"5m"` | no |
 | cidr\_block | Base CIDR block which will be divided into subnet CIDR blocks (e.g. `10.0.0.0/16`) | `string` | n/a | yes |

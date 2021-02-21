@@ -1,3 +1,7 @@
+# -----------------------------------------------------------------------------
+# Outputs: TF-MOD-AWS-DYNAMIC-SUBNETS
+# -----------------------------------------------------------------------------
+
 output "public_subnet_ids" {
   description = "IDs of the created public subnets"
   value       = aws_subnet.public.*.id
