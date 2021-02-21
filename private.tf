@@ -2,7 +2,7 @@ module "private_label" {
   source  = "cloudposse/label/null"
   version = "0.24.1"
 
-  attributes = ["private"]
+  attributes = ["private", "subnet"]
   tags = merge(
     var.private_subnets_additional_tags,
     { (var.subnet_type_tag_key) = format(var.subnet_type_tag_value_format, "private") }
