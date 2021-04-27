@@ -20,6 +20,7 @@ module "private_rt_label" {
     var.private_subnets_additional_tags,
     { (var.subnet_type_tag_key) = format(var.subnet_type_tag_value_format, "private") }
   )
+  context = module.this.context
 }
 
 
