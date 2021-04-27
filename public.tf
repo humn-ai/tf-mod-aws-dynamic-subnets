@@ -11,6 +11,20 @@ module "public_label" {
   context = module.this.context
 }
 
+module "public_rt_label" {
+  source  = "cloudposse/label/null"
+  version = "0.24.1"
+
+  attributes = ["public", "rt"]
+  tags = merge(
+    var.public_subnets_additional_tags,
+    { (var.subnet_type_tag_key) = format(var.subnet_type_tag_value_format, "public") }
+  )
+
+
+  context = module.this.context
+}
+
 locals {
   public_subnet_count        = local.enabled && var.max_subnet_count == 0 ? length(flatten(data.aws_availability_zones.available.*.names)) : var.max_subnet_count
   public_route_expr_enabled  = local.enabled && signum(length(var.vpc_default_route_table_id)) == 1
@@ -44,14 +58,15 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_route_table" "public" {
-  count  = local.public_route_expr_enabled ? 0 : local.enabled_count
+  count  = local.public_route_expr_enabled ? 0 : local.availability_zones_count
   vpc_id = join("", data.aws_vpc.default.*.id)
 
-  tags = module.public_label.tags
+  tags = module.public_rt_label.tags
 }
 
+
 resource "aws_route" "public" {
-  count                  = local.public_route_expr_enabled ? 0 : local.enabled_count
+  count                  = local.public_route_expr_enabled ? 0 : local.availability_zones_count
   route_table_id         = join("", aws_route_table.public.*.id)
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = var.igw_id

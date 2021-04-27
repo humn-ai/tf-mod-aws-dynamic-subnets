@@ -11,6 +11,18 @@ module "private_label" {
   context = module.this.context
 }
 
+module "private_rt_label" {
+  source  = "cloudposse/label/null"
+  version = "0.24.1"
+
+  attributes = ["private", "rt"]
+  tags = merge(
+    var.private_subnets_additional_tags,
+    { (var.subnet_type_tag_key) = format(var.subnet_type_tag_value_format, "private") }
+  )
+}
+
+
 locals {
   private_subnet_count        = var.max_subnet_count == 0 ? length(flatten(data.aws_availability_zones.available.*.names)) : var.max_subnet_count
   private_network_acl_enabled = signum(length(var.private_network_acl_id)) == 0 ? 1 : 0
@@ -45,7 +57,7 @@ resource "aws_route_table" "private" {
   vpc_id = join("", data.aws_vpc.default.*.id)
 
   tags = merge(
-    module.private_label.tags,
+    module.private_rt_label.tags,
     {
       "Name" = format("%s%s%s", module.private_label.id, local.delimiter, local.az_map[element(var.availability_zones, count.index)])
     }
