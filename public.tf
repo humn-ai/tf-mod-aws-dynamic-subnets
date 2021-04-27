@@ -85,7 +85,7 @@ resource "aws_route" "public" {
 resource "aws_route_table_association" "public" {
   count          = local.public_route_expr_enabled ? 0 : local.availability_zones_count
   subnet_id      = element(aws_subnet.public.*.id, count.index)
-  route_table_id = aws_route_table.public[0].id
+  route_table_id = element(aws_route_table.public.*.id, count.index)
 }
 
 resource "aws_route_table_association" "public_default" {
