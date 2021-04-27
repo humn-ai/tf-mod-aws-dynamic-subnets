@@ -61,7 +61,12 @@ resource "aws_route_table" "public" {
   count  = local.public_route_expr_enabled ? 0 : local.availability_zones_count
   vpc_id = join("", data.aws_vpc.default.*.id)
 
-  tags = module.public_rt_label.tags
+  tags = merge(
+    module.public_rt_label.tags,
+    {
+      "Name" = format("%s%s%s", module.public_rt_label.id, local.delimiter, local.az_map[element(var.availability_zones, count.index)])
+    }
+  )
 }
 
 

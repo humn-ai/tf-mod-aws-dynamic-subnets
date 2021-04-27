@@ -59,7 +59,7 @@ resource "aws_route_table" "private" {
   tags = merge(
     module.private_rt_label.tags,
     {
-      "Name" = format("%s%s%s", module.private_label.id, local.delimiter, local.az_map[element(var.availability_zones, count.index)])
+      "Name" = format("%s%s%s", module.private_rt_label.id, local.delimiter, local.az_map[element(var.availability_zones, count.index)])
     }
   )
 }
