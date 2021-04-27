@@ -41,6 +41,18 @@ variable "max_subnet_count" {
   description = "Sets the maximum amount of subnets to deploy. 0 will deploy a subnet for every provided availablility zone (in `availability_zones` variable) within the region"
 }
 
+variable "vpc_peering_route" {
+  default     = []
+  type        = list(string)
+  description = "list of vpc peering routes to add to the route tables"
+}
+
+variable "vpc_peering_connection_id" {
+  default     = ""
+  type        = string
+  description = "Identifier of a VPC peering connection."
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID where subnets will be created (e.g. `vpc-aceb2723`)"

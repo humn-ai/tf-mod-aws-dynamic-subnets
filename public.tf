@@ -82,6 +82,18 @@ resource "aws_route" "public" {
   }
 }
 
+resource "aws_route" "public_peering" {
+  count                     = local.public_route_expr_enabled && var.vpc_peering_route != [] ? 0 : local.availability_zones_count
+  route_table_id            = element(aws_route_table.public.*.id, count.index)
+  destination_cidr_block    = join("", var.vpc_peering_route)
+  vpc_peering_connection_id = var.vpc_peering_connection_id
+
+  timeouts {
+    create = var.aws_route_create_timeout
+    delete = var.aws_route_delete_timeout
+  }
+}
+
 resource "aws_route_table_association" "public" {
   count          = local.public_route_expr_enabled ? 0 : local.availability_zones_count
   subnet_id      = element(aws_subnet.public.*.id, count.index)
