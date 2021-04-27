@@ -67,7 +67,7 @@ resource "aws_route_table" "public" {
 
 resource "aws_route" "public" {
   count                  = local.public_route_expr_enabled ? 0 : local.availability_zones_count
-  route_table_id         = aws_route_table.public.*.id
+  route_table_id         = element(aws_route_table.public.*.id, count.index)
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = var.igw_id
 
